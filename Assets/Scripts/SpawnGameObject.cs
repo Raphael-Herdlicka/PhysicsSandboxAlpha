@@ -1,25 +1,20 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class SpawnGameObject : Tool
+public class SpawnGameObject : RapidFiringTool
 {
-	[SerializeField]
-	private GameObject go;
-	[SerializeField]
+    [SerializeField]
+    private GameObject go;
+    [SerializeField]
     private GameObject particleEffect;
 
-    void Update()
+    protected override void DoRapidFireUpdate()
     {
-        if (isActivated())
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 100))
         {
-            if (Input.GetMouseButton(0))
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 100))
-                {
-                    Instantiate(go,hit.point+Vector3.up,Quaternion.identity);
-                }
-            }
+            Instantiate(go, hit.point + Vector3.up, Quaternion.identity);
         }
     }
 }

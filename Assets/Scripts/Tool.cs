@@ -1,12 +1,18 @@
 ﻿using UnityEngine;
-public abstract class Tool : MonoBehaviour{
-	protected bool activated;
-	
-	public bool isActivated(){
-		return activated;
-	}
+public abstract class Tool : MonoBehaviour
+{
+    public bool Activated {
+        get;
+        set;
+    }
 
-	public void setActivated(bool activated){
-		this.activated = activated;
-	}
+    private void Update()
+    {
+        if (Activated)
+        {
+            DoUpdate();
+        }
+    }
+
+    protected abstract void DoUpdate(); 
 }

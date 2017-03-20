@@ -1,31 +1,27 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class ExplosionClick : Tool
+public class ExplosionClick : RapidFiringTool
 {
     [SerializeField]
     private float radius = 3f;
     [SerializeField]
     private float power = 300f;
+
     [SerializeField]
     private GameObject particleEffect;
 
-    void Update()
+    protected override void DoRapidFireUpdate()
     {
-        if (activated)
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 100))
         {
-            if (Input.GetMouseButton(0))
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 100))
-                {
-                    explodeAtPosition(hit.point);
-                }
-            }
+            ExplodeAtPosition(hit.point);
         }
     }
 
-    public void explodeAtPosition(Vector3 pos)
+    public void ExplodeAtPosition(Vector3 pos)
     {
         if (particleEffect != null)
         {
@@ -42,4 +38,6 @@ public class ExplosionClick : Tool
 
         }
     }
+
+
 }

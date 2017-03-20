@@ -26,7 +26,7 @@ public class ToolManager : MonoBehaviour
         {
             if (tools[i] != null)
             {
-                tools[i].setActivated(false);
+                tools[i].Activated = false;
             }
             else
             {
@@ -34,7 +34,7 @@ public class ToolManager : MonoBehaviour
                 i -= 1;
             }
         }
-        tools[0].setActivated(true);
+        tools[0].Activated = true;
     }
 
     // Update is called once per frame
@@ -43,9 +43,9 @@ public class ToolManager : MonoBehaviour
         float scrollWheelValue = Input.GetAxisRaw("Mouse ScrollWheel");
         if (scrollWheelValue != 0)
         {
-            tools[currentTool].setActivated(false);
+            tools[currentTool].Activated = false;
             changeTool(scrollWheelValue > 0);
-            tools[currentTool].setActivated(true);
+            tools[currentTool].Activated = true;
         }
     }
 
