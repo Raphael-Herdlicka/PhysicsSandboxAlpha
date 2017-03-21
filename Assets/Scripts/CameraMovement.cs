@@ -3,15 +3,20 @@ public class CameraMovement : MonoBehaviour
 {
 
     private Vector3 movementVector;
+
     [SerializeField]
     private float speed = 0.3f;
+
     [SerializeField]
     private float sprintModifer = 3f;
+
     [SerializeField]
     [TooltipAttribute("Mouse Sensitivity")]
     private float sensitivity = 0.5f;
+
     [SerializeField]
     private KeyCode sprintKey = KeyCode.LeftShift;
+
     private bool followMouseMovement = false;
 
     // Use this for initialization
@@ -44,6 +49,7 @@ public class CameraMovement : MonoBehaviour
         if (followMouseMovement)
         {
             Vector3 previousRot = transform.eulerAngles;
+            
             transform.rotation = Quaternion.Euler(new Vector3(-Input.GetAxisRaw("Mouse Y") + previousRot.x, Input.GetAxisRaw("Mouse X") + previousRot.y, 0));
         }
 

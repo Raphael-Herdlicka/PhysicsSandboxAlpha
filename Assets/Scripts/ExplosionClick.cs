@@ -5,6 +5,7 @@ public class ExplosionClick : RapidFiringTool
 {
     [SerializeField]
     private float radius = 3f;
+
     [SerializeField]
     private float power = 300f;
 

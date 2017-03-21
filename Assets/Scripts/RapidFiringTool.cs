@@ -6,6 +6,7 @@ public abstract class RapidFiringTool : Tool
 {
     [SerializeField]
     private bool rapidFire;
+
     private bool RapidFire {
         get {
             return rapidFire;

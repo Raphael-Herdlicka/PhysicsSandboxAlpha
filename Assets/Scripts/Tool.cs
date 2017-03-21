@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 public abstract class Tool : MonoBehaviour
 {
+
     public bool Activated {
         get;
         set;
@@ -15,4 +16,5 @@ public abstract class Tool : MonoBehaviour
     }
 
     protected abstract void DoUpdate(); 
+
 }

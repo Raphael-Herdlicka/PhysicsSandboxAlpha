@@ -5,6 +5,7 @@ public class SpawnGameObject : RapidFiringTool
 {
     [SerializeField]
     private GameObject go;
+
     [SerializeField]
     private GameObject particleEffect;
 

@@ -7,21 +7,27 @@ public class ToolBarUI : MonoBehaviour
 {
     [SerializeField]
     private ToolManager toolManager;
+
     [SerializeField]
     private float size = 20;
+
     [SerializeField]
     private float padding;
+
     [SerializeField]
     private float margin;
+
     private Image image;
+
     private RectTransform trans;
+
     [SerializeField]
     private GameObject toolImage;
 
     private List<GameObject> toolImages;
 
     private int lastCurrentTool = -1;
-    // Use this for initialization
+
     void Start()
     {
         image = GetComponent<Image>();
@@ -42,7 +48,6 @@ public class ToolBarUI : MonoBehaviour
         toolImages[toolManager.CurrentTool].GetComponent<Image>().color = Color.red;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (lastCurrentTool != -1)
@@ -55,4 +60,5 @@ public class ToolBarUI : MonoBehaviour
         }
         lastCurrentTool = toolManager.CurrentTool;
     }
+
 }

@@ -6,6 +6,7 @@ public class ToolManager : MonoBehaviour
 {
     [SerializeField]
     private List<Tool> tools;
+
     [SerializeField]
     private int currentTool = 0;
 

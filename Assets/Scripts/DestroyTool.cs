@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DestroyTool : RapidFiringTool {
+
     protected override void DoRapidFireUpdate()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -16,4 +17,5 @@ public class DestroyTool : RapidFiringTool {
             }
         }
     }
+
 }

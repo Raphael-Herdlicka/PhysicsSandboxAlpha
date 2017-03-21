@@ -5,8 +5,10 @@ public class SpawnGameObjectTiled : RapidFiringTool
 {
     [SerializeField]
     private GameObject go;
+
     [SerializeField]
     private GameObject particleEffect;
+
     [SerializeField]
     private float interval = 1;
 

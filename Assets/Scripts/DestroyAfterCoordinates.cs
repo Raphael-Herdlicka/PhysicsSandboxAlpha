@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 public class DestroyAfterCoordinates : MonoBehaviour {
+
 	[SerializeField]
 	float yLimit;
 	
@@ -10,4 +11,5 @@ public class DestroyAfterCoordinates : MonoBehaviour {
 			Destroy(gameObject);
 		}
 	}
+
 }
