@@ -5,9 +5,14 @@ using System;
 public abstract class RapidFiringTool : Tool
 {
     [SerializeField]
+    private bool rapidFire;
     private bool RapidFire {
-        get;
-        set;
+        get {
+            return rapidFire;
+        }
+        set {
+            rapidFire = value;
+        }
     }
 
     protected override void DoUpdate()
@@ -17,7 +22,7 @@ public abstract class RapidFiringTool : Tool
             RapidFire = !RapidFire;
         }
 
-        if (RapidFire ? Input.GetMouseButtonDown(0) : Input.GetMouseButton(0))
+        if (RapidFire ? Input.GetMouseButton(0) : Input.GetMouseButtonDown(0))
         {
             DoRapidFireUpdate();
         }

@@ -34,7 +34,7 @@ public class ToolManager : MonoBehaviour
                 i -= 1;
             }
         }
-        tools[0].Activated = true;
+        tools[currentTool].Activated = true;
     }
 
     // Update is called once per frame
