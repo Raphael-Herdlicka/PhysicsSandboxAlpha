@@ -4,6 +4,7 @@ namespace Assets.Scripts
 {
     public class ExplosionClick : RapidFiringTool
     {
+        [Header("Specific Settings")]
         [SerializeField]
         private float radius = 3f;
 
@@ -18,14 +19,9 @@ namespace Assets.Scripts
             this.particleEffect = particleEffect;
         }
 
-        protected override void DoRapidFireUpdate()
+        protected override void DoRapidFireUpdate(RaycastHit hit)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 100))
-            {
-                ExplodeAtPosition(hit.point);
-            }
+            ExplodeAtPosition(hit.point);
         }
 
         public void ExplodeAtPosition(Vector3 pos)

@@ -4,8 +4,15 @@ namespace Assets.Scripts
 {
     public abstract class RapidFiringTool : Tool
     {
+        [Header("General Settings")]
         [SerializeField]
         private bool rapidFire;
+
+        [SerializeField]
+        private float minRange = 5f;
+
+        [SerializeField]
+        private float maxRange = 200f;
 
         private bool RapidFire {
             get {
@@ -13,6 +20,24 @@ namespace Assets.Scripts
             }
             set {
                 rapidFire = value;
+            }
+        }
+
+        private float MinRange {
+            get {
+                return minRange;
+            }
+            set {
+                minRange = value;
+            }
+        }
+
+        private float MaxRange {
+            get {
+                return maxRange;
+            }
+            set {
+                maxRange = value;
             }
         }
 
@@ -25,10 +50,16 @@ namespace Assets.Scripts
 
             if (RapidFire ? Input.GetMouseButton(0) : Input.GetMouseButtonDown(0))
             {
-                DoRapidFireUpdate();
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, maxRange))
+                {
+                    if (hit.distance < minRange) return;
+                    DoRapidFireUpdate(hit);
+                }
             }
         }
 
-        protected abstract void DoRapidFireUpdate();
+        protected abstract void DoRapidFireUpdate(RaycastHit hit);
     }
 }

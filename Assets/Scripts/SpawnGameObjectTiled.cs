@@ -5,6 +5,7 @@ namespace Assets.Scripts
 {
     public class SpawnGameObjectTiled : RapidFiringTool
     {
+        [Header("Specific Settings")]
         [SerializeField]
         private GameObject go;
 
@@ -21,55 +22,47 @@ namespace Assets.Scripts
             tileContainer = new GameObject(this.GetType().Name + "Container");
         }
 
-        protected override void DoRapidFireUpdate()
+        protected override void DoRapidFireUpdate(RaycastHit hit)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 100))
+            if (hit.distance < 3) return;
+            Func<float, float> func = f =>
             {
-                /*TODO:
-             * The current version of this doesnt work in the negative space and does all sorts of weirdness
-             * 
-             */
-                Func<float, float> func = f =>
+                if (f >= 0)
                 {
-                    if (f >= 0)
-                    {
 
-                        float modulo = f % interval;
-                        if (modulo < interval / 2)
-                        {
-                            return f - modulo;
-                        }
-                        else
-                        {
-                            return f + (interval - modulo);
-                        }
+                    float modulo = f % interval;
+                    if (modulo < interval / 2)
+                    {
+                        return f - modulo;
                     }
                     else
                     {
-                        float regularMod = Mathf.Abs(f % interval);
-                        float intervalMod = interval - regularMod;
-                        if (regularMod < (interval / 2))
-                        {
-                            return f + regularMod;
-
-                        }
-                        else
-                        {
-                            return f - intervalMod;
-
-                        }
+                        return f + (interval - modulo);
                     }
+                }
+                else
+                {
+                    float regularMod = Mathf.Abs(f % interval);
+                    float intervalMod = interval - regularMod;
+                    if (regularMod < (interval / 2))
+                    {
+                        return f + regularMod;
 
-                };
+                    }
+                    else
+                    {
+                        return f - intervalMod;
 
-                Vector3 point = hit.point;
-                Vector3 tiledPos = new Vector3(func(point.x), func(point.y), func(point.z));
+                    }
+                }
 
-                GameObject tileGo = Instantiate(go, tiledPos, Quaternion.identity) as GameObject;
-                tileGo.transform.SetParent(tileContainer.transform);
-            }
+            };
+
+            Vector3 point = hit.point;
+            Vector3 tiledPos = new Vector3(func(point.x), func(point.y), func(point.z));
+
+            GameObject tileGo = Instantiate(go, tiledPos, Quaternion.identity) as GameObject;
+            tileGo.transform.SetParent(tileContainer.transform);
         }
     }
 }

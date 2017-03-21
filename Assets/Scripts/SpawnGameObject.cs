@@ -4,6 +4,7 @@ namespace Assets.Scripts
 {
     public class SpawnGameObject : RapidFiringTool
     {
+        [Header("Specific Settings")]
         [SerializeField]
         private GameObject go;
 
@@ -16,14 +17,9 @@ namespace Assets.Scripts
             this.go = go;
         }
 
-        protected override void DoRapidFireUpdate()
+        protected override void DoRapidFireUpdate(RaycastHit hit)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 100))
-            {
-                Instantiate(go, hit.point + Vector3.up, Quaternion.identity);
-            }
+            Instantiate(go, hit.point + Vector3.up, Quaternion.identity);
         }
     }
 }
