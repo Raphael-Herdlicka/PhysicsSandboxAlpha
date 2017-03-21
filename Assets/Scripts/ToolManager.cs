@@ -9,8 +9,26 @@ public class ToolManager : MonoBehaviour
     [SerializeField]
     private int currentTool = 0;
 
+    public int CurrentTool {
+        get {
+            return currentTool;
+        }
+        private set {
+            currentTool = value;
+        }
+    }
+
+    public List<Tool> Tools {
+        get {
+            return tools;
+        }
+        private set {
+            tools = value;
+        }
+    }
+
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         //ADD ALL TOOLS WHICH ARE NOT ALREADY PRESENT
         Component[] components = gameObject.GetComponents<Tool>();
@@ -21,6 +39,8 @@ public class ToolManager : MonoBehaviour
                 tools.Add((Tool)c);
             }
         }
+
+
 
         for (int i = 0; i < tools.Count; i++)
         {
@@ -40,16 +60,16 @@ public class ToolManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float scrollWheelValue = Input.GetAxisRaw("Mouse ScrollWheel");
+        float scrollWheelValue = -Input.GetAxisRaw("Mouse ScrollWheel");
         if (scrollWheelValue != 0)
         {
             tools[currentTool].Activated = false;
-            changeTool(scrollWheelValue > 0);
+            ChangeTool(scrollWheelValue > 0);
             tools[currentTool].Activated = true;
         }
     }
 
-    void changeTool(bool up)
+    void ChangeTool(bool up)
     {
         if (up)
         {
