@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class DestroyTool : RapidFiringTool {
+namespace Assets.Scripts
+{
+    public class DestroyTool : RapidFiringTool {
 
-    protected override void DoRapidFireUpdate()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 100))
+        protected override void DoRapidFireUpdate()
         {
-            if(hit.transform.tag == "CreatedByPlayer")
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 100))
             {
-                Destroy(hit.transform.gameObject);
+                if(hit.transform.tag == "CreatedByPlayer")
+                {
+                    Destroy(hit.transform.gameObject);
+                }
             }
         }
-    }
 
+    }
 }

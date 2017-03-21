@@ -1,44 +1,51 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ExplosionClick : RapidFiringTool
+namespace Assets.Scripts
 {
-    [SerializeField]
-    private float radius = 3f;
-
-    [SerializeField]
-    private float power = 300f;
-
-    [SerializeField]
-    private GameObject particleEffect;
-
-    protected override void DoRapidFireUpdate()
+    public class ExplosionClick : RapidFiringTool
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 100))
-        {
-            ExplodeAtPosition(hit.point);
-        }
-    }
+        [SerializeField]
+        private float radius = 3f;
 
-    public void ExplodeAtPosition(Vector3 pos)
-    {
-        if (particleEffect != null)
+        [SerializeField]
+        private float power = 300f;
+
+        [SerializeField]
+        private GameObject particleEffect;
+
+        public ExplosionClick(GameObject particleEffect)
         {
-            Instantiate(particleEffect, pos, Quaternion.identity);
+            this.particleEffect = particleEffect;
         }
-        Collider[] colliders = Physics.OverlapSphere(pos, radius);
-        foreach (Collider c in colliders)
+
+        protected override void DoRapidFireUpdate()
         {
-            Rigidbody rb = c.GetComponent<Rigidbody>();
-            if (rb != null)
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 100))
             {
-                rb.AddExplosionForce(power, pos, radius, 3);
+                ExplodeAtPosition(hit.point);
             }
-
         }
+
+        public void ExplodeAtPosition(Vector3 pos)
+        {
+            if (particleEffect != null)
+            {
+                Instantiate(particleEffect, pos, Quaternion.identity);
+            }
+            Collider[] colliders = Physics.OverlapSphere(pos, radius);
+            foreach (Collider c in colliders)
+            {
+                Rigidbody rb = c.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    rb.AddExplosionForce(power, pos, radius, 3);
+                }
+
+            }
+        }
+
+
     }
-
-
 }

@@ -1,33 +1,34 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System;
 
-public abstract class RapidFiringTool : Tool
+namespace Assets.Scripts
 {
-    [SerializeField]
-    private bool rapidFire;
-
-    private bool RapidFire {
-        get {
-            return rapidFire;
-        }
-        set {
-            rapidFire = value;
-        }
-    }
-
-    protected override void DoUpdate()
+    public abstract class RapidFiringTool : Tool
     {
-        if (Input.GetMouseButtonDown(2))
-        {
-            RapidFire = !RapidFire;
+        [SerializeField]
+        private bool rapidFire;
+
+        private bool RapidFire {
+            get {
+                return rapidFire;
+            }
+            set {
+                rapidFire = value;
+            }
         }
 
-        if (RapidFire ? Input.GetMouseButton(0) : Input.GetMouseButtonDown(0))
+        protected override void DoUpdate()
         {
-            DoRapidFireUpdate();
+            if (Input.GetMouseButtonDown(2))
+            {
+                RapidFire = !RapidFire;
+            }
+
+            if (RapidFire ? Input.GetMouseButton(0) : Input.GetMouseButtonDown(0))
+            {
+                DoRapidFireUpdate();
+            }
         }
+
+        protected abstract void DoRapidFireUpdate();
     }
-
-    protected abstract void DoRapidFireUpdate();
 }

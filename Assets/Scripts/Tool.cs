@@ -1,20 +1,24 @@
 ﻿using UnityEngine;
-public abstract class Tool : MonoBehaviour
+
+namespace Assets.Scripts
 {
-
-    public bool Activated {
-        get;
-        set;
-    }
-
-    private void Update()
+    public abstract class Tool : MonoBehaviour
     {
-        if (Activated)
-        {
-            DoUpdate();
+
+        public bool Activated {
+            get;
+            set;
         }
+
+        private void Update()
+        {
+            if (Activated)
+            {
+                DoUpdate();
+            }
+        }
+
+        protected abstract void DoUpdate(); 
+
     }
-
-    protected abstract void DoUpdate(); 
-
 }
