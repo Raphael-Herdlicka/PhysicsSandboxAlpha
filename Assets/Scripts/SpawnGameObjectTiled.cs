@@ -24,7 +24,6 @@ namespace Assets.Scripts
 
         protected override void DoRapidFireUpdate(RaycastHit hit)
         {
-            if (hit.distance < 3) return;
             Func<float, float> func = f =>
             {
                 if (f >= 0)
@@ -60,9 +59,34 @@ namespace Assets.Scripts
 
             Vector3 point = hit.point;
             Vector3 tiledPos = new Vector3(func(point.x), func(point.y), func(point.z));
+            if (BrushSize <= 1)
+            {
+                GameObject tileGo = Instantiate(go, tiledPos, Quaternion.identity) as GameObject;
+                tileGo.transform.SetParent(tileContainer.transform);
+            }
+            else
+            {
+                int length = (BrushSize - 1) * 2 + 1;
+                CreateCircle(tiledPos, length);
 
-            GameObject tileGo = Instantiate(go, tiledPos, Quaternion.identity) as GameObject;
-            tileGo.transform.SetParent(tileContainer.transform);
+            }
+
+        }
+        private void CreateCircle(Vector3 center, int length)
+        {
+            Vector3 upLeftPos = center - new Vector3(length / 2, 0, length / 2);
+            for (int i = 0; i < length; i++)
+            {
+                for (int j = 0; j < length; j++)
+                {
+                    Vector3 currentPos = upLeftPos + new Vector3(i, 0, j);
+                    if (Vector3.Distance(center, currentPos) < ((length - 1) / 2))
+                    {
+                        GameObject tileGo = Instantiate(go, currentPos, Quaternion.identity) as GameObject;
+                        tileGo.transform.SetParent(tileContainer.transform);
+                    }
+                }
+            }
         }
     }
 }

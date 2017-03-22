@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.IO;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
@@ -13,6 +14,9 @@ namespace Assets.Scripts
 
         [SerializeField]
         private float maxRange = 200f;
+
+        [SerializeField]
+        private int brushSize = 1;
 
         private bool RapidFire {
             get {
@@ -41,8 +45,28 @@ namespace Assets.Scripts
             }
         }
 
+        public int BrushSize {
+            get {
+                return brushSize;
+            }
+            set {
+                if (value > 0)
+                    brushSize = value;
+            }
+        }
+
         protected override void DoUpdate()
         {
+            //Increment/Decrement BrushSize
+            if (Input.GetKeyDown(KeyCode.Equals))
+            {
+                brushSize++;
+            }
+            if (Input.GetKeyDown(KeyCode.Minus) && brushSize > 0)
+            {
+                brushSize--;
+            }
+
             if (Input.GetMouseButtonDown(2))
             {
                 RapidFire = !RapidFire;
@@ -61,5 +85,6 @@ namespace Assets.Scripts
         }
 
         protected abstract void DoRapidFireUpdate(RaycastHit hit);
+
     }
 }

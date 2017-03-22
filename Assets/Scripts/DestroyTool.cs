@@ -4,28 +4,13 @@ namespace Assets.Scripts
 {
     public class DestroyTool : RapidFiringTool
     {
-        [Header("Specific Settings")]
-        [SerializeField]
-        private float brushSize = 1;
-
-        protected override void DoUpdate()
-        {
-            base.DoUpdate();
-            if (Input.GetKeyDown(KeyCode.Equals))
-            {
-                brushSize++;
-            }
-            if (Input.GetKeyDown(KeyCode.Minus) && brushSize > 0)
-            {
-                brushSize--;
-            }
-        }
+        
 
         protected override void DoRapidFireUpdate(RaycastHit hit)
         {
-            if (brushSize > 1)
+            if (BrushSize > 1)
             {
-                Collider[] colliders = Physics.OverlapSphere(hit.point, brushSize);
+                Collider[] colliders = Physics.OverlapSphere(hit.point, BrushSize);
 
                 for (int i = 0; i < colliders.Length; i++)
                 {
