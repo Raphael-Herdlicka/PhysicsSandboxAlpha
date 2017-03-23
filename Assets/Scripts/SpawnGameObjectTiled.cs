@@ -67,14 +67,18 @@ namespace Assets.Scripts
             else
             {
                 int length = (BrushSize - 1) * 2 + 1;
-                CreateCircle(tiledPos, length);
+                for (int i = -((length - 1) / 2); i < ((length - 1) / 2) + 1; i++)
+                {
+                    CreateCircle(tiledPos, length, i);
+                }
+
 
             }
 
         }
-        private void CreateCircle(Vector3 center, int length)
+        private void CreateCircle(Vector3 center, int length, int yOffset)
         {
-            Vector3 upLeftPos = center - new Vector3(length / 2, 0, length / 2);
+            Vector3 upLeftPos = center - new Vector3(length / 2, yOffset, length / 2);
             for (int i = 0; i < length; i++)
             {
                 for (int j = 0; j < length; j++)

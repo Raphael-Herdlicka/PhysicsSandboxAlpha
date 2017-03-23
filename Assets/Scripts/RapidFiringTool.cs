@@ -18,6 +18,11 @@ namespace Assets.Scripts
         [SerializeField]
         private int brushSize = 1;
 
+        [SerializeField]
+        private float rapidFireDelay = 0;
+        
+        private float rapidFireDelayTime = 0;
+
         private bool RapidFire {
             get {
                 return rapidFire;
@@ -55,6 +60,18 @@ namespace Assets.Scripts
             }
         }
 
+        public float RapidFireDelay {
+            get {
+                return rapidFireDelay;
+            }
+            set {
+                if (value >= 0)
+                {
+                    rapidFireDelay = value;
+                }
+            }
+        }
+
         protected override void DoUpdate()
         {
             //Increment/Decrement BrushSize
@@ -72,7 +89,18 @@ namespace Assets.Scripts
                 RapidFire = !RapidFire;
             }
 
-            if (RapidFire ? Input.GetMouseButton(0) : Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(0) && RapidFire && (rapidFireDelayTime <= 0 || rapidFireDelay <= 0))
+            {
+                rapidFireDelayTime = rapidFireDelay;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, maxRange))
+                {
+                    if (hit.distance < minRange) return;
+                    DoRapidFireUpdate(hit);
+                }
+            }
+            else if (Input.GetMouseButtonDown(0))
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
@@ -81,6 +109,11 @@ namespace Assets.Scripts
                     if (hit.distance < minRange) return;
                     DoRapidFireUpdate(hit);
                 }
+            }
+
+            if (rapidFireDelayTime > 0)
+            {
+                rapidFireDelayTime -= Time.deltaTime;
             }
         }
 
